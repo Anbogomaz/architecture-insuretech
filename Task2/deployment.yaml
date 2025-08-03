@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: scaletest-app
+spec:
+  replicas: 1 # Начинаем с одной реплики, как требуется в задании
+  selector:
+    matchLabels:
+      app: scaletest-app
+  template:
+    metadata:
+      labels:
+        app: scaletest-app
+    spec:
+      containers:
+      - name: scaletest-app
+        image: ghcr.io/yandex-practicum/scaletestapp:latest # Образ тестового приложения
+        ports:
+        - containerPort: 8080
+        resources:
+          limits:
+            memory: "30Mi" # Жесткий лимит по памяти
+          requests:
+            memory: "20Mi" # Сколько памяти запрашивать при старте
